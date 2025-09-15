@@ -1,10 +1,6 @@
 package com.gamehubcdac;
-import com.gamehubcdac.game.Game;
 import com.gamehubcdac.game.GameHubManager;
-import com.gamehubcdac.user.User;
-import com.gamehubcdac.user.UserManager;
 
-import javax.swing.*;
 import java.util.*;
 
 public class Main {

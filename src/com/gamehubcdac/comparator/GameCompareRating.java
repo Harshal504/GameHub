@@ -1,4 +1,6 @@
-package com.gamehubcdac.game;
+package com.gamehubcdac.comparator;
+
+import com.gamehubcdac.game.Game;
 
 import java.util.Comparator;
 

@@ -1,5 +1,7 @@
 package com.gamehubcdac.game;
 
+import com.gamehubcdac.comparator.GameCompareName;
+import com.gamehubcdac.comparator.GameCompareRating;
 import com.gamehubcdac.exceptions.GameNotFoundException;
 import com.gamehubcdac.exceptions.InvalidRatingException;
 import com.gamehubcdac.exceptions.UserNotFoundException;
@@ -75,6 +77,14 @@ public class GameHubManager implements GameActions {
     }
 
     // ---------------- User Management ----------------
+//    2.2 User Management
+//● Register User
+//➔ Input: Username, Email
+//➔ Validation: Username must be unique
+//➔ Output: Confirmation message
+//● View Users
+//➔ Output: List of all registered users
+
     @Override
     public void registerUser(String username, String email) {
         for (User u : users) {
@@ -94,6 +104,20 @@ public class GameHubManager implements GameActions {
     }
 
     // ---------------- Borrowing System ----------------
+//    2.3 Borrowing System
+//● Issue Game
+//➔ Input: Game ID, Username
+//➔ Validation: Game must be available, User must exist
+//➔ Action: Move game to borrowedQueue, add game to user’s borrowed list
+//➔ Output: Success/Error message
+//● Return Game
+//➔ Input: Game ID, Username
+//➔ Validation: Only borrower can return the game
+//➔ Action: Move game back to available list
+//➔ Output: Success/Error message
+//● Borrowed Games Queue
+//➔ Output: Display current borrowed games in queue order
+
     @Override
     public void issueGame(int gameId, String username) {
         try {
@@ -152,6 +176,13 @@ public class GameHubManager implements GameActions {
     }
 
     // ---------------- Statistics ----------------
+//    2.4 Reporting & Statistics
+//● Collection Statistics
+//➔ Total Games, Available Games, Borrowed Games
+//● User Statistics
+//➔ Total Registered Users
+//● Borrowed Queue Display
+//➔ Current games on loan
     @Override
     public void collectionStatistics() {
         long borrowed = allGames.stream().filter(Game::isBorrowed).count();

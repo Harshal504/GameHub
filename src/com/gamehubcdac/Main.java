@@ -1,6 +1,8 @@
 package com.gamehubcdac;
 import com.gamehubcdac.game.Game;
-import com.gamehubcdac.game.GameManager;
+import com.gamehubcdac.game.GameHubManager;
+import com.gamehubcdac.user.User;
+import com.gamehubcdac.user.UserManager;
 
 import javax.swing.*;
 import java.util.*;
@@ -8,28 +10,97 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        Set<Game> games = new HashSet<Game>();
+        GameHubManager manager = new GameHubManager();
+        Scanner sc = new Scanner(System.in);
+        int choice;
 
-        games.add(new Game(101,"The Witcher 3", "RPG", 5, "PC"));
-        games.add(new Game(102,"God of War", "Action", 5, "Console"));
-//        games.add(new Game("Minecraft", "Sandbox", 4, "PC"));
-//        games.add(new Game("FIFA 23", "Sports", 3, "Console"));
-//        games.add(new Game("The Witcher 3", "RPG", 5, "PC"));
+        do {
+            System.out.println("\n=== GAME HUB MENU ===");
+            System.out.println("1. Add Game");
+            System.out.println("2. Remove Game");
+            System.out.println("3. View Games");
+            System.out.println("4. Search Game");
+            System.out.println("5. Register User");
+            System.out.println("6. View Users");
+            System.out.println("7. Issue Game");
+            System.out.println("8. Return Game");
+            System.out.println("9. Display Borrowed Queue");
+            System.out.println("10. Collection Statistics");
+            System.out.println("11. User Statistics");
+            System.out.println("0. Exit");
+            System.out.print("Enter choice: ");
+            choice = sc.nextInt();
+            sc.nextLine(); // consume newline
 
-        GameManager gM= new GameManager();
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter genre: ");
+                    String genre = sc.nextLine();
+                    System.out.print("Enter rating (1-5): ");
+                    int rating = sc.nextInt(); sc.nextLine();
+                    System.out.print("Enter platform (Console/PC): ");
+                    String platform = sc.nextLine();
+                    manager.addGame(name, genre, rating, platform);
+                    break;
+                case 2:
+                    System.out.print("Enter Game ID to remove: ");
+                    int id = sc.nextInt();
+                    manager.removeGame(id);
+                    break;
+                case 3:
+                    System.out.print("Sort by (ID/Name/Rating): ");
+                    String sortBy = sc.nextLine();
+                    manager.viewGames(sortBy);
+                    break;
+                case 4:
+                    System.out.print("Enter name/genre to search: ");
+                    String keyword = sc.nextLine();
+                    manager.searchGame(keyword);
+                    break;
+                case 5:
+                    System.out.print("Enter username: ");
+                    String username = sc.nextLine();
+                    System.out.print("Enter email: ");
+                    String email = sc.nextLine();
+                    manager.registerUser(username, email);
+                    break;
+                case 6:
+                    manager.viewUsers();
+                    break;
+                case 7:
+                    System.out.print("Enter Game ID: ");
+                    int gameId = sc.nextInt(); sc.nextLine();
+                    System.out.print("Enter username: ");
+                    String uname = sc.nextLine();
+                    manager.issueGame(gameId, uname);
+                    break;
+                case 8:
+                    System.out.print("Enter Game ID: ");
+                    int returnId = sc.nextInt(); sc.nextLine();
+                    System.out.print("Enter username: ");
+                    String uReturn = sc.nextLine();
+                    manager.returnGame(returnId, uReturn);
+                    break;
+                case 9:
+                    manager.displayBorrowedQueue();
+                    break;
+                case 10:
+                    manager.collectionStatistics();
+                    break;
+                case 11:
+                    manager.userStatistics();
+                    break;
+                case 0:
+                    System.out.println("Exiting... Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        } while (choice != 0);
 
-        gM.addGame(games,103,"Minecraft", "Sandbox", 4, "PC" );
-        System.out.println(games);
-
-
-        gM.removeGame(games, 102);
-        System.out.println(games);
-
-        ArrayList<Game> allgames = new ArrayList<Game>(games);
-        gM.viewGames(allgames, "ID");
-        System.out.println(allgames);
-
-        gM.searchGame(games, "RPG");
-
+        sc.close();
     }
 }
+

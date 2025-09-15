@@ -1,20 +1,25 @@
 package com.gamehubcdac.game;
 
+import com.gamehubcdac.exceptions.InvalidRatingException;
+
 import java.util.Comparator;
 
-public class Game{
+public abstract class Game implements Comparable<Game>{
     private String name;
     private String genre;
     private int rating;
     private String platform;
     private int id;
+    private boolean isBorrowed;
+    private static int idCounter = 1;
 
-    public Game(int id, String name, String genre, int rating, String platform) {
+    public Game(String name, String genre, int rating, String platform) {
         this.name = name;
         this.genre = genre;
         this.rating = rating;
         this.platform = platform;
-        this.id=id;
+        this.id=idCounter++;
+        this.isBorrowed=false;
     }
 
     public String getName() {
@@ -38,7 +43,15 @@ public class Game{
     }
 
     public void setRating(int rating) {
-        this.rating = rating;
+        try{
+            if(rating<0 || rating>5){
+                throw new InvalidRatingException("Invalid Rating");
+            }
+            this.rating = rating;
+
+        }catch (InvalidRatingException e){
+
+        }
     }
 
     public String getPlatform() {
@@ -54,17 +67,34 @@ public class Game{
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id = idCounter++;
+    }
+
+    public boolean isBorrowed() {
+        return isBorrowed;
+    }
+
+    public void setBorrowed(boolean borrowed) {
+        isBorrowed = borrowed;
     }
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
+        return "Game{" +
+                "name='" + name + '\'' +
                 ", genre='" + genre + '\'' +
                 ", rating=" + rating +
                 ", platform='" + platform + '\'' +
-                ", id=" + id+ '\n';
+                ", id=" + id +
+                ", isBorrowed=" + isBorrowed +
+                '}';
+    }
+
+    abstract void displayDetails();
+
+    @Override
+    public int compareTo(Game o) {
+        return Integer.compare(this.id, o.id);
     }
 }
-
 

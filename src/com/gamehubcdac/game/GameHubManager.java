@@ -15,7 +15,12 @@ public class GameHubManager implements GameActions {
     private LinkedList<Game> borrowedQueue = new LinkedList<>();
     private HashSet<User> users = new HashSet<>();
     private HashMap<Integer, Game> gameMap = new HashMap<>();
-
+//----------------------- Game Management--------------------
+//● Add Game
+//➔ Input: Name, Genre, Rating (1-5), Platform (Console/PC)
+//            ➔ Validation: Rating must be 1-5
+//            ➔ Action: Add game to allGames list
+//➔ Output: Success message with game ID
     @Override
     public void addGame(String name, String genre, int rating, String platform) {
         try {
@@ -36,6 +41,10 @@ public class GameHubManager implements GameActions {
         }
     }
 
+//    Remove Game
+//➔ Input: Game ID
+//➔ Validation: Cannot remove if game is borrowed
+//➔ Output: Success/Error message
 
     @Override
     public void removeGame(int id) {
@@ -54,6 +63,13 @@ public class GameHubManager implements GameActions {
         }
     }
 
+
+
+
+//    ● View Games
+//➔ Options: Sort by ID, Name, Rating
+//➔ Output: List of games with all details (platform-specific info included)
+
     @Override
     public void viewGames(String sortBy) {
         List<Game> sorted = new ArrayList<>(allGames);
@@ -66,6 +82,12 @@ public class GameHubManager implements GameActions {
         }
         sorted.forEach(Game::displayDetails);
     }
+
+
+
+//● Search Game
+//➔ Input: Name or Genre
+//➔ Output: Display matching games
 
     @Override
     public void searchGame(String keyword) {
